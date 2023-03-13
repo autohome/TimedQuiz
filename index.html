@@ -4,12 +4,45 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Timed Quiz</title>
     <link rel="stylesheet" href="./assets/css/reset.css">
     <link rel="stylesheet" href="./assets/css/style.css">
 </head>
 <body>
-    
+    <header>
+        <h1>Timed Quiz Challenge</h1>
+    </header>
+    <section id="topbar">
+        <h2 id="highscores">View high scores</h2>
+        <h2 id ="timeleft">Time:<span id="secondsLeft"></span></h2>
+    </section>
+    <main>
+        <section id="startpage">
+            <p>Try to answer the following code related questions within the limit. Keep in mind that the incorrect answers will penalize your score/time by 10 seconds.
+            </p>
+            <button id="startQuiz">Start Quiz</button>
+        </section>
+        <section id="quiz">
+        <h2>Question 1:</h2>
+        <ul>
+            <li><button>A</button>London</li>
+            <li><button>B</button>Paris</li>
+            <li><button>C</button>Madrid</li>
+            <li><button>D</button>Rome</li>
+        </ul>
+        </section>
+        <section id="end">
+            <h4>All done!</h4>
+            <p>Your final score is <span id="final-score"></span>.</p>
+            <form>
+                <label for="initials">Enter initials:</label>
+                <input type="text" id="initials" name="initials" required minlength="1" maxlength="3">
+                <button type="submit" id="submit">Submit</button>
+            </form>
+        </section>
+    </main>
+    <footer>
+    </footer>
     <script src="./assets/js/script.js"></script>
 </body>
 </html>
