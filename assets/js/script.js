@@ -35,8 +35,8 @@ const quizQuestions = [
 // ELement selectors
 var startPage = document.querySelector('#startpage');
 var quizContainer = document.querySelector ('#quizContainer');
-var questionContainer = document.querySelector ("questionContainer")
-var answerContainer = document.querySelector ("answerContainer")
+var questionContainer = document.querySelector ("#questionContainer")
+var answerContainer = document.querySelector ("#answerContainer")
 var endPage = document.querySelector ("#end");
 var timerElement = document.querySelector ("#secondsLeft");
 var startButton = document.querySelector("#startQuiz");
@@ -55,8 +55,8 @@ function startGame () {
     highScoresButton.setAttribute("style", "visibility:hidden;");
     // SET TIMER
     timerCount = 30;
-    buildQuiz()
     startTimer()
+    buildQuiz()
 }
 
 
@@ -79,8 +79,16 @@ function buildQuiz () {
 
     // get question from array and send to HTML
     var currentQuestion = quizQuestions[currentQuestionIndex];
-    questionContainer.innerHTML = currentQuestion.question;
+    questionContainer.textContent = currentQuestion.question;
 
+    //  add answer buttons as buttons
+    var numberOfAnswers = currentQuestion.length
+    answerContainer.textContent = "";
+
+    for (var i = 0; i < numberOfAnswers; i++) {
+        var choiceButton = document.createElement ("button");
+        choiceButton.textcontent = currentQuestion.answers[i];
+    }
 }
 
 
