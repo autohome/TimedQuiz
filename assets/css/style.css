@@ -35,9 +35,12 @@
     display: flex;
     justify-content: space-between;
     margin: 10px 20px;
+    font-size: 20px;
   }
   
-
+  #timeleft {
+    float: right;
+  }
   
   main {
     max-width: 800px;
@@ -55,46 +58,37 @@
     font-weight: 600;
   }
 
-  #startQuiz {
+  button {
     margin: 20px;
-    width: 200px;
-    height: 80px;
+    padding: 20px;
     background-color: var(--mossGreen);
     border: none;
     color: white;
-    padding: 15px 32 px;
-    /* display: inline-block; */
+    display: inline-block;
     font-size: 25px;
   }
 
-  #quiz {
-    display: none;
-  }
-  #quiz h2 {
+  #quizContainer {
+    display: contents;
     font-size: 24px;
     font-weight: bold;
     margin-bottom: 10px;
   }
   
 
-  #quiz ul {
+  #answerContainer {
     list-style: none;
     margin-bottom: 20px;
+    text-align: center;
   }
   
-  #quiz li {
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-  }
-  
-  #quiz button {
-    width: 40px;
-  }
 
   #end{
     display: none;
   }
 
+  #results {
+    visibility: hidden;
+  }
 
     

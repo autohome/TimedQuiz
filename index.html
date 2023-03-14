@@ -14,7 +14,7 @@
     </header>
     <section id="topbar">
         <h2 id="highscores">View high scores</h2>
-        <h2 id ="timeleft">Time:<span id="secondsLeft"></span></h2>
+        <h2 id ="timeleft">Time:<span id="secondsLeft">10</span></h2>
     </section>
     <main>
         <section id="startpage">
@@ -22,14 +22,11 @@
             </p>
             <button id="startQuiz">Start Quiz</button>
         </section>
-        <section id="quiz">
-        <h2>Question 1:</h2>
-        <ul>
-            <li><button>A</button>London</li>
-            <li><button>B</button>Paris</li>
-            <li><button>C</button>Madrid</li>
-            <li><button>D</button>Rome</li>
-        </ul>
+        <section id="quizContainer">
+        <div id="questionContainer"></div>
+        <div id="answerContainer">
+        </div>
+        <p id="results"></p>
         </section>
         <section id="end">
             <h4>All done!</h4>
