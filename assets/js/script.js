@@ -2,33 +2,18 @@
 const quizQuestions = [
     {
         question: "In which year was the first Batman comic book published?",
-        answers: {
-            a: "1939",
-            b: "1949",
-            c: "1959",
-            d: "1969"
-        },
-        correctAnswer: "a"
+        answers: ["1939", "1949", "1959", "1969"],
+        correctAnswer: 0
     },
     {
         question: "Which actor played Batman in the 1995 movie 'Batman Forever?'",
-        answers: {
-            a: "Michael Keaton",
-            b: "George Clooney",
-            c: "Val Kilmer",
-            d: "Danny DeVito"
-        },
-        correctAnswer: "c"
+        answers: ["Michael Keaton", "George Clooney", "Val Kilmer", "Danny DeVito"],
+        correctAnswer: 2
     },
     {
         question: "Who is the villain in 2008 Batman movie 'The Dark Knight'",
-        answers: {
-            a: "The Joker",
-            b: "The Riddler",
-            c: "The Penguin",
-            d: "Superman"
-        },
-        correctAnswer: "a"
+        answers: ["The Joker", "The Riddler", "The Penguin", "Superman"],
+        correctAnswer: 0
     }
   ];
   
@@ -82,12 +67,21 @@ function buildQuiz () {
     questionContainer.textContent = currentQuestion.question;
 
     //  add answer buttons as buttons
-    var numberOfAnswers = currentQuestion.length
+    var numberOfAnswers = currentQuestion.answers.length
     answerContainer.textContent = "";
 
+    // for loop top pull all answers
     for (var i = 0; i < numberOfAnswers; i++) {
-        var choiceButton = document.createElement ("button");
-        choiceButton.textcontent = currentQuestion.answers[i];
+        var choice = currentQuestion.answers[i];
+        
+        // creates buttons
+        var answerChoices = document.createElement("button");
+
+        // adds answers text to buttons
+        answerChoices.textContent = choice;
+
+        // appends buttons to container
+        answerContainer.appendChild(answerChoices);
     }
 }
 
