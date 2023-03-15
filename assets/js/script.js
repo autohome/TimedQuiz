@@ -20,12 +20,18 @@ const quizQuestions = [
 // ELement selectors
 var startPage = document.querySelector('#startpage');
 var quizContainer = document.querySelector ('#quizContainer');
-var questionContainer = document.querySelector ("#questionContainer")
-var answerContainer = document.querySelector ("#answerContainer")
+var questionContainer = document.querySelector ("#questionContainer");
+var answerContainer = document.querySelector ("#answerContainer");
 var endPage = document.querySelector ("#end");
 var timerElement = document.querySelector ("#secondsLeft");
 var startButton = document.querySelector("#startQuiz");
-var highScoresButton = document.querySelector("#highscores")
+var highScoresButton = document.querySelector("#highscores");
+
+// answer correct or not
+ var result ;
+
+// footer for result prompt
+var footer = document.querySelector("footer")
 
 var answerButtons = document.querySelector(".answers")
 
@@ -50,7 +56,7 @@ function startGame () {
 
 function startTimer () {
     // run countdown
-    timer = setInterval(function() {
+    timerInterval = setInterval(function() {
         timerCount--;
         timerElement.textContent = timerCount;
         // if timer reaches 0, game lost
@@ -83,7 +89,12 @@ function buildQuiz () {
 
             // adds answers text to buttons
             answerChoices.textContent = choice;
-            answerChoices.setAttribute("class", "answers")
+            answerChoices.setAttribute("class", "answers");
+
+            // adds index number to element for listening function
+            answerChoices.setAttribute("data-index", i);
+
+            answerChoices.addEventListener("click", answerResult);
 
             // appends buttons to container
             answerContainer.appendChild(answerChoices);
@@ -91,24 +102,77 @@ function buildQuiz () {
     } else {
         endGame();
     }
+}
+
+// run function for 5 second of result
+function resultPrompt () {
+    if (result) {
+        footer.setAttribute("display", "contents");
+        footer.innerHTML = "Correct!";
+        setTimeout(function() {
+            footer.innerHTML = "";
+        },4000);
+    } else  {
+                footer.setAttribute("display", "contents");
+        footer.innerHTML = "Wrong!";
+        setTimeout(function() {
+            footer.innerHTML = "";
+        },4000);
+    }
 
 }
 
+
+
+
 // check if answer result
-function answerResult () {
+function answerResult (event) {
+    var chosenAnswer = event.target.dataset.index;
+    if (chosenAnswer == quizQuestions[currentQuestionIndex].correctAnswer) {
+        result = true;
+        console.log(result)
+        resultPrompt();
+
+
+    } else {
+        result = false
+        timerCount -= 10;
+        console.log(result)
+        resultPrompt();
+    }
+
     
     
+    currentQuestionIndex++;
+    buildQuiz()
+
 }
 
 // TODO: endgame, tally up score and ask to be high score list
 
+function endGame () {
+
+    // stop timer and record the timee left
+    clearInterval(timerInterval);
+    var score = timerCount;
+    console.log(score);
+
+    quizContainer.textContent = "All Done!";
+    answerContainer.innerHTML = "Your final score is " ;
+
+}
+
 // TODO: lose game, bring back high score and TRY AGAIN button
 
+function loseGame () {
+    clearInterval(timerInterval)
+    
+}
 
 // Listen for start game and run
 startButton.addEventListener("click", startGame)
 
 // add event listener for answer click
-answerButtons.addEventListener("click", answerResult(event))
+// answerButtons.addEventListener("click", answerResult(event))
 
 
