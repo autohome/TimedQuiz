@@ -14,8 +14,45 @@ const quizQuestions = [
         question: "Who is the villain in 2008 Batman movie 'The Dark Knight'",
         answers: ["The Joker", "The Riddler", "The Penguin", "Superman"],
         correctAnswer: 0
+    },
+    {
+        question: "Which actor played the role of Superman in the 1978 movie 'Superman'?",
+        answers: ["Christopher Reeve", "Henry Cavill", "Brandon Routh", "Tom Welling"],
+        correctAnswer: 0
+    },
+    {
+        question: "In which year was the first X-Men movie released?",
+        answers: ["2000", "1998", "2002", "2004"],
+        correctAnswer: 0
+    },
+    {
+        question: "Which actress played the role of Black Widow in the Marvel Cinematic Universe?",
+        answers: ["Scarlett Johansson", "Jennifer Lawrence", "Brie Larson", "Gal Gadot"],
+        correctAnswer: 0
+    },
+    {
+        question: "Who played the role of the Joker in the 2019 movie 'Joker'?",
+        answers: ["Joaquin Phoenix", "Heath Ledger", "Jared Leto", "Jack Nicholson"],
+        correctAnswer: 0
+    },
+    {
+        question: "Which actor played the role of Spider-Man in the 2002 movie 'Spider-Man'?",
+        answers: ["Tobey Maguire", "Tom Holland", "Andrew Garfield", "Nicholas Hoult"],
+        correctAnswer: 0
+    },
+    {
+        question: "Who is the villain in the 2018 Marvel movie 'Black Panther'?",
+        answers: ["Killmonger", "Thanos", "Loki", "Ultron"],
+        correctAnswer: 0
+    },
+    {
+        question: "Which actor played the role of Iron Man in the Marvel Cinematic Universe?",
+        answers: ["Robert Downey Jr.", "Chris Evans", "Mark Ruffalo", "Jeremy Renner"],
+        correctAnswer: 0
     }
-  ];
+];
+
+
   
 // ELement selectors
 var startPage = document.querySelector('#startpage');
@@ -43,7 +80,7 @@ var footer = document.querySelector("footer")
 
 var answerButtons = document.querySelector(".answers")
 
-
+var tryAgainbtn = document.querySelector("#tryAgainbtn")
 var score;
 var storedScores =[];
 var timer;
@@ -52,13 +89,17 @@ var currentQuestionIndex = 0;
 
 // function to clear page and start quiz
 function startGame () {
+    currentQuestionIndex = 0;
+    console.log("sihabsflh")
     startPage.setAttribute ("style", "display:none;");
-    answerContainer.setAttribute ("style", "display:flex;");
+    // quizContainer.setAttribute("style", "display:contents;");
+    // answerContainer.setAttribute ("style", "display:flex;");
+    // questionContainer.setAttribute("style", "display:contents;");
     highScoresButton.setAttribute("style", "visibility:hidden;");
     topBar.setAttribute("style", "display:flex;")
     // SET TIMER
-    timerCount = 31;
-    currentQuestionIndex = 0;
+    timerCount = 101;
+
     startTimer()
     buildQuiz()
 }
@@ -82,10 +123,12 @@ function buildQuiz () {
     if (currentQuestionIndex < quizQuestions.length) {
          // display quiz container
         quizContainer.setAttribute("style", "display:contents;");
+        questionContainer.setAttribute("style", "display:contents;");
+        answerContainer.setAttribute("style", "display:flex;");
 
         // get question from array and send to HTML
         var currentQuestion = quizQuestions[currentQuestionIndex];
-        questionContainer.textContent = currentQuestion.question;
+        questionContainer.innerHTML = currentQuestion.question;
 
         //  add answer buttons as buttons
         var numberOfAnswers = currentQuestion.answers.length
@@ -175,6 +218,7 @@ function endGame () {
     finalScore.textContent = score
 
     form.addEventListener("submit", function(event) {
+        quizContainer.innerHTML = ""
         event.preventDefault();
         enterScore();
         scoresTable()
@@ -182,8 +226,6 @@ function endGame () {
 }
 
 function enterScore () {
-    console.log(score)
-
     var inputInitials = initials.value.toUpperCase();
 
     var playerScores = JSON.parse(localStorage.getItem("highScores")) || [];
@@ -217,17 +259,21 @@ function scoresTable () {
     }
 
 
-    var tryAgainbtn = document.createElement("button")
-    tryAgainbtn.textContent = "Start Quiz"
+    tryAgainbtn = document.createElement("button")
+    tryAgainbtn.setAttribute= ("style", "id:tryAgainbtn")
+    tryAgainbtn.textContent = "Home Page"
 
+
+
+    scoreContainer.appendChild(tryAgainbtn)
 
     tryAgainbtn.addEventListener("click", function(){
         tryAgainbtn.remove();
         scoreContainer.setAttribute ("style", "display:none;");
-        startGame()
-    }),
+        currentQuestionIndex = 0;
+        window.location.reload();
+})
 
-    scoreContainer.appendChild(tryAgainbtn)
 }
 
 // TODO: lose game, bring back high score and TRY AGAIN button
@@ -236,6 +282,7 @@ function loseGame () {
     clearInterval(timerInterval)
     answerContainer.setAttribute("style", "display:none;")
     questionContainer.innerHTML = "Time's Up!"
+    highScoresButton.setAttribute("style", "visibility:visible;")
     var tryAgainbtn = document.createElement("button")
     tryAgainbtn.textContent = "Try Again?"
 

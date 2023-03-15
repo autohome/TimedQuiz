@@ -90,7 +90,6 @@
   }
   
   #questionContainer {
-    display: grid;
     text-align: center;
 
   }
@@ -120,6 +119,7 @@
 
   footer {
     text-align: center;
+    font-size: 25px;
   }
 
     
