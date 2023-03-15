@@ -44,7 +44,7 @@ var footer = document.querySelector("footer")
 var answerButtons = document.querySelector(".answers")
 
 
-var score 
+var score;
 var storedScores =[];
 var timer;
 var timerCount;
@@ -183,12 +183,22 @@ function endGame () {
 
 function enterScore () {
     console.log(score)
-    var userScore = {
-        initials: initials.value.trim(),
-        score: score
-    }
-    localStorage.setItem("userScore", JSON.stringify(userScore))
 
+    var inputInitials = initials.value.toUpperCase();
+
+    var playerScores = JSON.parse(localStorage.getItem("highScores")) || [];
+
+    var highScores = {
+        initials: inputInitials,
+        score: score
+    };
+
+    playerScores.push(highScores);
+    console.log(highScores);
+
+    localStorage.setItem("highScores", JSON.stringify(playerScores));
+
+    scoresTable();
 }
 
 function scoresTable () {
@@ -198,6 +208,14 @@ function scoresTable () {
     scoreContainer.setAttribute ("style", "display:flex;");
     topBar.setAttribute("style", "display:none;")
 
+    var playerHighScores = JSON.parse(localStorage.getItem("highScores")) || [];
+    scoreContainer.innerHTML="";
+    for (i=0; i<playerHighScores.length; i++) {
+        var listItemEl = document.createElement("li");
+        listItemEl.textContent = playerHighScores[i].initials + "  -  " + playerHighScores[i].score
+        scoreContainer.appendChild(listItemEl)
+    }
+
 
     var tryAgainbtn = document.createElement("button")
     tryAgainbtn.textContent = "Start Quiz"
@@ -205,20 +223,11 @@ function scoresTable () {
 
     tryAgainbtn.addEventListener("click", function(){
         tryAgainbtn.remove();
+        scoreContainer.setAttribute ("style", "display:none;");
         startGame()
     }),
 
     scoreContainer.appendChild(tryAgainbtn)
-
-
-
-    // var lastScore = JSON.parse(localStorage.getItem("userScore"));
-
-
-
-
-
-
 }
 
 // TODO: lose game, bring back high score and TRY AGAIN button
