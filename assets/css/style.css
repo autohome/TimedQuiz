@@ -38,6 +38,15 @@
     font-size: 20px;
   }
   
+  #highscores {
+    color:  var(--darkGreen);
+  }
+
+  #highscores:hover {
+    cursor: pointer;
+    color: var(--mossGreen);
+  }
+
   #timeleft {
     float: right;
   }
@@ -80,6 +89,11 @@
     margin-bottom: 10px;
   }
   
+  #questionContainer {
+    display: grid;
+    text-align: center;
+
+  }
 
   #answerContainer {
     list-style: none;
@@ -95,10 +109,6 @@
 
   #end{
     display: none;
-  }
-
-  #results {
-    visibility: hidden;
   }
 
   footer {

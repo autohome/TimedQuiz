@@ -23,23 +23,20 @@
             <button id="startQuiz">Start Quiz</button>
         </section>
         <section id="quizContainer">
-        <div id="questionContainer"></div>
-        <div id="answerContainer">
-        </div>
-        <p id="results"></p>
+            <div id="questionContainer"></div>
+            <div id="answerContainer"></div>
         </section>
         <section id="end">
-            <h4>All done!</h4>
             <p>Your final score is <span id="final-score"></span>.</p>
-            <form>
+            <form id="enterScore">
                 <label for="initials">Enter initials:</label>
-                <input type="text" id="initials" name="initials" required minlength="1" maxlength="3">
+                <input type="text" id="initials" name="initials" required minlength="1" maxlength="10">
                 <button type="submit" id="submit">Submit</button>
             </form>
         </section>
+        <section id="scoreContainer"></section>
     </main>
-    <footer>vxcvbxfbv
-    </footer>
+    <footer></footer>
     <script src="./assets/js/script.js"></script>
 </body>
 </html>

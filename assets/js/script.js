@@ -26,6 +26,14 @@ var endPage = document.querySelector ("#end");
 var timerElement = document.querySelector ("#secondsLeft");
 var startButton = document.querySelector("#startQuiz");
 var highScoresButton = document.querySelector("#highscores");
+var scoreContainer = document.querySelector("#scoreContainer")
+var topBar =  document.querySelector("#topbar")
+
+var finalScore = document.querySelector("#final-score");
+
+var form = document.querySelector("#enterScore")
+
+var initials = document.querySelector("#initials")
 
 // answer correct or not
  var result ;
@@ -36,7 +44,7 @@ var footer = document.querySelector("footer")
 var answerButtons = document.querySelector(".answers")
 
 
-var Score
+var score 
 var storedScores =[];
 var timer;
 var timerCount;
@@ -45,9 +53,12 @@ var currentQuestionIndex = 0;
 // function to clear page and start quiz
 function startGame () {
     startPage.setAttribute ("style", "display:none;");
+    answerContainer.setAttribute ("style", "display:flex;");
     highScoresButton.setAttribute("style", "visibility:hidden;");
+    topBar.setAttribute("style", "display:flex;")
     // SET TIMER
-    timerCount = 30;
+    timerCount = 31;
+    currentQuestionIndex = 0;
     startTimer()
     buildQuiz()
 }
@@ -154,11 +165,59 @@ function endGame () {
 
     // stop timer and record the timee left
     clearInterval(timerInterval);
-    var score = timerCount;
+    score = timerCount;
+    timerElement.textContent = score
     console.log(score);
 
-    quizContainer.textContent = "All Done!";
-    answerContainer.innerHTML = "Your final score is " ;
+    quizContainer.innerHTML = "All Done."
+
+    endPage.setAttribute("style", "display:contents;")
+    finalScore.textContent = score
+
+    form.addEventListener("submit", function(event) {
+        event.preventDefault();
+        enterScore();
+        scoresTable()
+    })
+}
+
+function enterScore () {
+    console.log(score)
+    var userScore = {
+        initials: initials.value.trim(),
+        score: score
+    }
+    localStorage.setItem("userScore", JSON.stringify(userScore))
+
+}
+
+function scoresTable () {
+    startPage.setAttribute ("style", "display:none;");
+    quizContainer.setAttribute ("style", "display:none;");
+    endPage.setAttribute("style", "display:none;")
+    scoreContainer.setAttribute ("style", "display:flex;");
+    topBar.setAttribute("style", "display:none;")
+
+
+    var tryAgainbtn = document.createElement("button")
+    tryAgainbtn.textContent = "Start Quiz"
+
+
+    tryAgainbtn.addEventListener("click", function(){
+        tryAgainbtn.remove();
+        startGame()
+    }),
+
+    scoreContainer.appendChild(tryAgainbtn)
+
+
+
+    // var lastScore = JSON.parse(localStorage.getItem("userScore"));
+
+
+
+
+
 
 }
 
@@ -166,13 +225,25 @@ function endGame () {
 
 function loseGame () {
     clearInterval(timerInterval)
-    
+    answerContainer.setAttribute("style", "display:none;")
+    questionContainer.innerHTML = "Time's Up!"
+    var tryAgainbtn = document.createElement("button")
+    tryAgainbtn.textContent = "Try Again?"
+
+    tryAgainbtn.addEventListener("click", startGame)
+
+
+    questionContainer.appendChild(tryAgainbtn)
+
+
+
 }
 
 // Listen for start game and run
 startButton.addEventListener("click", startGame)
 
-// add event listener for answer click
-// answerButtons.addEventListener("click", answerResult(event))
+// view high scores
+highScoresButton.addEventListener("click", scoresTable)
+
 
 
