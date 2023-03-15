@@ -27,6 +27,8 @@ var timerElement = document.querySelector ("#secondsLeft");
 var startButton = document.querySelector("#startQuiz");
 var highScoresButton = document.querySelector("#highscores")
 
+var answerButtons = document.querySelector(".answers")
+
 
 var Score
 var storedScores =[];
@@ -51,45 +53,62 @@ function startTimer () {
     timer = setInterval(function() {
         timerCount--;
         timerElement.textContent = timerCount;
+        // if timer reaches 0, game lost
         if (timerCount === 0) {
-            return;
+            loseGame();
         }
     }, 1000);
 }
 
 
 function buildQuiz () {
-    // display quiz container
-    quizContainer.setAttribute("style", "display:contents;");
+    if (currentQuestionIndex < quizQuestions.length) {
+         // display quiz container
+        quizContainer.setAttribute("style", "display:contents;");
 
-    // get question from array and send to HTML
-    var currentQuestion = quizQuestions[currentQuestionIndex];
-    questionContainer.textContent = currentQuestion.question;
+        // get question from array and send to HTML
+        var currentQuestion = quizQuestions[currentQuestionIndex];
+        questionContainer.textContent = currentQuestion.question;
 
-    //  add answer buttons as buttons
-    var numberOfAnswers = currentQuestion.answers.length
-    answerContainer.textContent = "";
+        //  add answer buttons as buttons
+        var numberOfAnswers = currentQuestion.answers.length
+        answerContainer.textContent = "";
 
-    // for loop top pull all answers
-    for (var i = 0; i < numberOfAnswers; i++) {
-        var choice = currentQuestion.answers[i];
+        // for loop top pull all answers
+        for (var i = 0; i < numberOfAnswers; i++) {
+            var choice = currentQuestion.answers[i];
         
-        // creates buttons
-        var answerChoices = document.createElement("button");
+            // creates buttons
+            var answerChoices = document.createElement("button");
 
-        // adds answers text to buttons
-        answerChoices.textContent = choice;
+            // adds answers text to buttons
+            answerChoices.textContent = choice;
+            answerChoices.setAttribute("class", "answers")
 
-        // appends buttons to container
-        answerContainer.appendChild(answerChoices);
+            // appends buttons to container
+            answerContainer.appendChild(answerChoices);
+        }
+    } else {
+        endGame();
     }
+
 }
 
+// check if answer result
+function answerResult () {
+    
+    
+}
+
+// TODO: endgame, tally up score and ask to be high score list
+
+// TODO: lose game, bring back high score and TRY AGAIN button
 
 
 // Listen for start game and run
 startButton.addEventListener("click", startGame)
 
-
+// add event listener for answer click
+answerButtons.addEventListener("click", answerResult(event))
 
 
