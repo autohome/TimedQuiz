@@ -17,23 +17,23 @@ const quizQuestions = [
     },
     {
         question: "Which actor played the role of Superman in the 1978 movie 'Superman'?",
-        answers: ["Christopher Reeve", "Henry Cavill", "Brandon Routh", "Tom Welling"],
-        correctAnswer: 0
+        answers: ["Henry Cavill", "Christopher Reeve", "Marshall Mathers", "Peter Dinklage"],
+        correctAnswer: 1
     },
     {
         question: "In which year was the first X-Men movie released?",
-        answers: ["2000", "1998", "2002", "2004"],
-        correctAnswer: 0
+        answers: ["1998", "2002", "2004", "2000"],
+        correctAnswer: 3
     },
     {
         question: "Which actress played the role of Black Widow in the Marvel Cinematic Universe?",
-        answers: ["Scarlett Johansson", "Jennifer Lawrence", "Brie Larson", "Gal Gadot"],
-        correctAnswer: 0
+        answers: ["Jennifer Lawrence", "Brie Larson", "Scarlett Johansson", "Gal Gadot"],
+        correctAnswer: 2
     },
     {
         question: "Who played the role of the Joker in the 2019 movie 'Joker'?",
-        answers: ["Joaquin Phoenix", "Heath Ledger", "Jared Leto", "Jack Nicholson"],
-        correctAnswer: 0
+        answers: ["Heath Ledger", "Joaquin Phoenix", "Jared Leto", "Jack Nicholson"],
+        correctAnswer: 1
     },
     {
         question: "Which actor played the role of Spider-Man in the 2002 movie 'Spider-Man'?",
@@ -42,13 +42,13 @@ const quizQuestions = [
     },
     {
         question: "Who is the villain in the 2018 Marvel movie 'Black Panther'?",
-        answers: ["Killmonger", "Thanos", "Loki", "Ultron"],
-        correctAnswer: 0
+        answers: ["Thanos", "Loki", "Ultron", "Killmonger"],
+        correctAnswer: 3
     },
     {
         question: "Which actor played the role of Iron Man in the Marvel Cinematic Universe?",
-        answers: ["Robert Downey Jr.", "Chris Evans", "Mark Ruffalo", "Jeremy Renner"],
-        correctAnswer: 0
+        answers: ["Chris Evans", "Robert Downey Jr.", "Mark Ruffalo", "Jeremy Renner"],
+        correctAnswer: 1
     }
 ];
 
@@ -97,7 +97,8 @@ function startGame () {
     highScoresButton.setAttribute("style", "visibility:hidden;");
     topBar.setAttribute("style", "display:flex;")
     // SET TIMER
-    timerCount = 101;
+
+    timerCount = (quizQuestions.length * 10) + 1;
 
     startTimer()
     buildQuiz()
@@ -209,10 +210,10 @@ function endGame () {
     // stop timer and record the time left, display end message with final score. 
     clearInterval(timerInterval);
     score = timerCount;
-    timerElement.textContent = score
-    quizContainer.innerHTML = "All Done."
-    endPage.setAttribute("style", "display:contents;")
-    finalScore.textContent = score
+    timerElement.textContent = score;
+    quizContainer.innerHTML = "All Done.";
+    endPage.setAttribute("style", "display:contents;");
+    finalScore.textContent = score;
     // listen for form submission
     form.addEventListener("submit", function(event) {
         quizContainer.innerHTML = ""
@@ -242,9 +243,9 @@ function enterScore () {
 function scoresTable () {
     startPage.setAttribute ("style", "display:none;");
     quizContainer.setAttribute ("style", "display:none;");
-    endPage.setAttribute("style", "display:none;")
+    endPage.setAttribute("style", "display:none;");
     scoreContainer.setAttribute ("style", "display:flex;");
-    topBar.setAttribute("style", "display:none;")
+    topBar.setAttribute("style", "display:none;");
     // pull scores array from local storage
     var playerHighScores = JSON.parse(localStorage.getItem("highScores")) || [];
     scoreContainer.innerHTML="";
@@ -255,9 +256,9 @@ function scoresTable () {
         scoreContainer.appendChild(listItemEl)
     }
     // create restart button
-    tryAgainbtn = document.createElement("button")
-    tryAgainbtn.setAttribute= ("style", "id:tryAgainbtn")
-    tryAgainbtn.textContent = "Home Page"
+    tryAgainbtn = document.createElement("button");
+    tryAgainbtn.setAttribute= ("style", "id:tryAgainbtn");
+    tryAgainbtn.textContent = "Home Page";
     scoreContainer.appendChild(tryAgainbtn)
     // reload upon click
     tryAgainbtn.addEventListener("click", function(){
@@ -278,7 +279,9 @@ function loseGame () {
     var tryAgainbtn = document.createElement("button")
     tryAgainbtn.textContent = "Try Again?"
     // listen for try again
-    tryAgainbtn.addEventListener("click", startGame)
+    tryAgainbtn.addEventListener("click", function(){
+        window.location.reload()
+    })
     questionContainer.appendChild(tryAgainbtn)
 }
 
