@@ -53,7 +53,6 @@ const quizQuestions = [
 ];
 
 
-  
 // ELement selectors
 var startPage = document.querySelector('#startpage');
 var quizContainer = document.querySelector ('#quizContainer');
@@ -73,7 +72,7 @@ var form = document.querySelector("#enterScore")
 var initials = document.querySelector("#initials")
 
 // answer correct or not
- var result ;
+var result ;
 
 // footer for result prompt
 var footer = document.querySelector("footer")
@@ -120,6 +119,7 @@ function startTimer () {
 
 
 function buildQuiz () {
+    // check if last question
     if (currentQuestionIndex < quizQuestions.length) {
          // display quiz container
         quizContainer.setAttribute("style", "display:contents;");
@@ -158,16 +158,18 @@ function buildQuiz () {
     }
 }
 
-// run function for 5 second of result
+// run function for  second of result
 function resultPrompt () {
+    // prompt for correct answer
     if (result) {
         footer.setAttribute("display", "contents");
         footer.innerHTML = "Correct!";
         setTimeout(function() {
             footer.innerHTML = "";
         },4000);
+        // prompt for wrong answer
     } else  {
-                footer.setAttribute("display", "contents");
+        footer.setAttribute("display", "contents");
         footer.innerHTML = "Wrong!";
         setTimeout(function() {
             footer.innerHTML = "";
@@ -181,22 +183,20 @@ function resultPrompt () {
 
 // check if answer result
 function answerResult (event) {
+    // compare correct answer with chosen
     var chosenAnswer = event.target.dataset.index;
+    // if correct run correct prompt
     if (chosenAnswer == quizQuestions[currentQuestionIndex].correctAnswer) {
         result = true;
-        console.log(result)
         resultPrompt();
-
-
+    // if wrong run incorrect prompt and subtract 10 seconds from timer
     } else {
         result = false
         timerCount -= 10;
         console.log(result)
         resultPrompt();
     }
-
-    
-    
+    // run build quiz with next question
     currentQuestionIndex++;
     buildQuiz()
 
@@ -206,17 +206,14 @@ function answerResult (event) {
 
 function endGame () {
 
-    // stop timer and record the timee left
+    // stop timer and record the time left, display end message with final score. 
     clearInterval(timerInterval);
     score = timerCount;
     timerElement.textContent = score
-    console.log(score);
-
     quizContainer.innerHTML = "All Done."
-
     endPage.setAttribute("style", "display:contents;")
     finalScore.textContent = score
-
+    // listen for form submission
     form.addEventListener("submit", function(event) {
         quizContainer.innerHTML = ""
         event.preventDefault();
@@ -224,49 +221,45 @@ function endGame () {
         scoresTable()
     })
 }
-
+// enter players score into local storage
 function enterScore () {
     var inputInitials = initials.value.toUpperCase();
-
+    // take out entire array of current score to add new score
     var playerScores = JSON.parse(localStorage.getItem("highScores")) || [];
-
     var highScores = {
         initials: inputInitials,
         score: score
     };
-
+    // add new score to end of current array
     playerScores.push(highScores);
-    console.log(highScores);
-
+    // save to local storage
     localStorage.setItem("highScores", JSON.stringify(playerScores));
-
+    // run score table page to see high scores
     scoresTable();
 }
 
+// display score table page
 function scoresTable () {
     startPage.setAttribute ("style", "display:none;");
     quizContainer.setAttribute ("style", "display:none;");
     endPage.setAttribute("style", "display:none;")
     scoreContainer.setAttribute ("style", "display:flex;");
     topBar.setAttribute("style", "display:none;")
-
+    // pull scores array from local storage
     var playerHighScores = JSON.parse(localStorage.getItem("highScores")) || [];
     scoreContainer.innerHTML="";
+    // display arrays
     for (i=0; i<playerHighScores.length; i++) {
         var listItemEl = document.createElement("li");
         listItemEl.textContent = playerHighScores[i].initials + "  -  " + playerHighScores[i].score
         scoreContainer.appendChild(listItemEl)
     }
-
-
+    // create restart button
     tryAgainbtn = document.createElement("button")
     tryAgainbtn.setAttribute= ("style", "id:tryAgainbtn")
     tryAgainbtn.textContent = "Home Page"
-
-
-
     scoreContainer.appendChild(tryAgainbtn)
-
+    // reload upon click
     tryAgainbtn.addEventListener("click", function(){
         tryAgainbtn.remove();
         scoreContainer.setAttribute ("style", "display:none;");
@@ -277,7 +270,6 @@ function scoresTable () {
 }
 
 // TODO: lose game, bring back high score and TRY AGAIN button
-
 function loseGame () {
     clearInterval(timerInterval)
     answerContainer.setAttribute("style", "display:none;")
@@ -285,14 +277,9 @@ function loseGame () {
     highScoresButton.setAttribute("style", "visibility:visible;")
     var tryAgainbtn = document.createElement("button")
     tryAgainbtn.textContent = "Try Again?"
-
+    // listen for try again
     tryAgainbtn.addEventListener("click", startGame)
-
-
     questionContainer.appendChild(tryAgainbtn)
-
-
-
 }
 
 // Listen for start game and run
