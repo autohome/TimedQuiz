@@ -19,7 +19,7 @@ N/A
 
 ## Usage
 
-The website address is (https://autohome.github.io/TimedQuiz/)
+The website address is [autohome.github.io/TimedQuiz/](https://autohome.github.io/TimedQuiz/)
 
 The start page has option to view high scores or start the quiz with instruction. 
 
